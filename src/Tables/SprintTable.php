@@ -65,16 +65,11 @@ class SprintTable extends AbstractTable
             ->column(
                 key: 'id',
                 label: __('Id'),
-                sortable: true
+                sortable: true,hidden: true
             )
             ->column(
-                key: 'project_id',
-                label: __('Project id'),
-                sortable: true
-            )
-            ->column(
-                key: 'created_by',
-                label: __('Created by'),
+                key: 'project.name',
+                label: __('Project'),
                 sortable: true
             )
             ->column(
@@ -83,23 +78,8 @@ class SprintTable extends AbstractTable
                 sortable: true
             )
             ->column(
-                key: 'description',
-                label: __('Description'),
-                sortable: true
-            )
-            ->column(
                 key: 'status',
                 label: __('Status'),
-                sortable: true
-            )
-            ->column(
-                key: 'icon',
-                label: __('Icon'),
-                sortable: true
-            )
-            ->column(
-                key: 'color',
-                label: __('Color'),
                 sortable: true
             )
             ->column(

@@ -1,18 +1,18 @@
 <x-tomato-admin-container label="{{trans('tomato-admin::global.crud.view')}} {{__('Issue')}} #{{$model->id}}">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        
-          <x-tomato-admin-row :label="__('Reporter')" :value="$model->Reporter->name" type="text" />
 
-          <x-tomato-admin-row :label="__('Project')" :value="$model->Project->name" type="text" />
+          <x-tomato-admin-row :label="__('Reporter')" :value="$model->reporter?->name" type="text" />
 
-          <x-tomato-admin-row :label="__('Account')" :value="$model->Account->name" type="text" />
+          <x-tomato-admin-row :label="__('Project')" :value="$model->project?->name" type="text" />
 
-          <x-tomato-admin-row :label="__('Closed by')" :value="$model->Closed_by->name" type="text" />
+          <x-tomato-admin-row :label="__('Account')" :value="$model->account?->name" type="text" />
 
-          
+          <x-tomato-admin-row :label="__('Closed by')" :value="$model->closedBy?->name" type="text" />
+
+
           <x-tomato-admin-row :label="__('Sprint')" :value="$model->Sprint->name" type="text" />
 
-          
+
           <x-tomato-admin-row :label="__('Type')" :value="$model->type" type="string" />
 
           <x-tomato-admin-row :label="__('Status')" :value="$model->status" type="string" />

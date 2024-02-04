@@ -1,34 +1,86 @@
+@if(request()->has('parent_id'))
+
+@endif
+
+@php
+    if(request()->has('parent_id')){
+        $parent = \TomatoPHP\TomatoTasks\Models\Issue::find(request()->get('parent_id'));
+        $type = \TomatoPHP\TomatoCategory\Models\Type::where('for', 'issues')->where('type', 'types')->where('key', $parent->type)->first();
+    }
+@endphp
+
 <x-tomato-admin-layout>
     <x-slot:header>
-        {{ __('Issue') }}
+        @if(request()->has('parent_id'))
+            {{ $parent->summary }}
+        @else
+            {{ __('Issues') }}
+        @endif
     </x-slot:header>
+    <x-slot:icon>
+        @if(request()->has('parent_id'))
+            {{$type->icon}}
+        @else
+            bx bxs-category
+        @endif
+    </x-slot:icon>
     <x-slot:buttons>
-        <x-tomato-admin-button :modal="true" :href="route('admin.issues.create')" type="link">
-            {{trans('tomato-admin::global.crud.create-new')}} {{__('Issue')}}
-        </x-tomato-admin-button>
+        @if(request()->has('parent_id'))
+            <x-tomato-admin-button warning :href="route('admin.issues.index')" type="link">
+                {{__('Back')}}
+            </x-tomato-admin-button>
+            <x-tomato-admin-button :modal="true" :href="route('admin.issues.create').'?parent_id='.request()->get('parent_id')" type="link">
+                {{trans('tomato-admin::global.crud.create-new')}} {{__('Issue')}}
+            </x-tomato-admin-button>
+       @else
+            <x-tomato-admin-button :modal="true" :href="route('admin.issues.create')" type="link">
+                {{trans('tomato-admin::global.crud.create-new')}} {{__('Issue')}}
+            </x-tomato-admin-button>
+        @endif
+
+        <x-tomato-admin-dropdown>
+            <x-slot:button>
+                <div class="filament-button inline-flex items-center justify-center py-1 gap-1 font-medium rounded-lg border transition-colors focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-inset dark:focus:ring-offset-0 min-h-[2.25rem] px-4 text-sm shadow-sm focus:ring-white filament-page-button-action bg-primary-600 hover:bg-primary-500 focus:bg-primary-700 focus:ring-offset-primary-700 text-white border-transparent">
+                    <i class="bx bx-cog"></i>
+                </div>
+            </x-slot:button>
+
+            <x-tomato-admin-dropdown-item type="link" :href="route('admin.types.issues.types.index')" :label="__('Types')" icon="bx bxs-circle" />
+            <x-tomato-admin-dropdown-item type="link" :href="route('admin.types.issues.status.index')" :label="__('Status')" icon="bx bxs-circle" />
+        </x-tomato-admin-dropdown>
     </x-slot:buttons>
 
     <div class="pb-12">
         <div class="mx-auto">
             <x-splade-table :for="$table" striped>
-                <x-splade-cell description>
-    <x-tomato-admin-row table :value="$item->description" />
-</x-splade-cell>
-<x-splade-cell points>
-    <x-tomato-admin-row table type="number" :value="$item->points" />
-</x-splade-cell>
-<x-splade-cell icon>
-    <x-tomato-admin-row table type="icon" :value="$item->icon" />
-</x-splade-cell>
-<x-splade-cell color>
-    <x-tomato-admin-row table type="color" :value="$item->color" />
-</x-splade-cell>
-<x-splade-cell order>
-    <x-tomato-admin-row table type="number" :value="$item->order" />
-</x-splade-cell>
-<x-splade-cell is_closed>
-    <x-tomato-admin-row table type="bool" :value="$item->is_closed" />
-</x-splade-cell>
+                <x-splade-cell summary>
+                    @php $type = \TomatoPHP\TomatoCategory\Models\Type::where('for', 'issues')->where('type', 'types')->where('key', $item->type)->first(); @endphp
+                    @if($type)
+                        <x-splade-link :href="route('admin.issues.index').'?parent_id='.$item->id" class="flex justify-start gap-2">
+                            <x-tomato-admin-tooltip :text="$type->name">
+                            <div class="flex flex-col justify-center items-center w-6 h-6  rounded-lg text-white" style="background-color: {{$type->color}}">
+                                <i class="{{$type->icon}} text-sm"></i>
+                            </div>
+                            </x-tomato-admin-tooltip>
+                            <div class="flex flex-col justify-center items-center font-bold">
+                                {{$item->summary}}
+                            </div>
+                        </x-splade-link>
+                    @endif
+                </x-splade-cell>
+                <x-splade-cell status>
+                    @php $status = \TomatoPHP\TomatoCategory\Models\Type::where('for', 'issues')->where('type', 'status')->where('key', $item->status)->first(); @endphp
+                    @if($status)
+                        <x-splade-link :href="route('admin.issues.index').'?filter[status]='.$status->key" class="flex justify-start gap-2">
+                            <div class="flex flex-col justify-center items-center w-6 h-6  rounded-lg text-white" style="background-color: {{$status->color}}">
+                                <i class="{{$status->icon}} text-sm"></i>
+                            </div>
+                            <div class="flex flex-col justify-center items-center font-bold">
+                                {{$status->name}}
+                            </div>
+                        </x-splade-link>
+                    @endif
+                </x-splade-cell>
 
                 <x-splade-cell actions>
                     <div class="flex justify-start">

@@ -24,11 +24,16 @@ class IssueController extends Controller
      */
     public function index(Request $request): View|JsonResponse
     {
+        $query = $this->model::query();
+        if($request->has('parent_id')){
+            $query->where('parent_id', $request->parent_id);
+        }
         return Tomato::index(
             request: $request,
             model: $this->model,
             view: 'tomato-tasks::issues.index',
-            table: \TomatoPHP\TomatoTasks\Tables\IssueTable::class
+            table: \TomatoPHP\TomatoTasks\Tables\IssueTable::class,
+            query: $query
         );
     }
 
@@ -60,6 +65,10 @@ class IssueController extends Controller
      */
     public function store(Request $request): RedirectResponse|JsonResponse
     {
+        $request->merge([
+           "reporter_id" => auth('web')->user()->id,
+        ]);
+
         $response = Tomato::store(
             request: $request,
             model: \TomatoPHP\TomatoTasks\Models\Issue::class,
@@ -90,7 +99,7 @@ class IssueController extends Controller
             return $response;
         }
 
-        return $response->redirect;
+        return back();
     }
 
     /**

@@ -5,6 +5,8 @@ namespace TomatoPHP\TomatoTasks;
 use Illuminate\Support\ServiceProvider;
 use TomatoPHP\TomatoAdmin\Facade\TomatoMenu;
 use TomatoPHP\TomatoAdmin\Services\Contracts\Menu;
+use TomatoPHP\TomatoCategory\Facades\TomatoCategory;
+use TomatoPHP\TomatoCategory\Services\Contracts\Type;
 
 
 class TomatoTasksServiceProvider extends ServiceProvider
@@ -59,12 +61,25 @@ class TomatoTasksServiceProvider extends ServiceProvider
                 ->group(__('PMS'))
                 ->label(__('Sprints'))
                 ->route('admin.sprints.index')
-                ->icon('bx bx-circle'),
+                ->icon('bx bxs-pie-chart'),
             Menu::make()
                 ->group(__('PMS'))
                 ->label(__('Issues'))
                 ->route('admin.issues.index')
-                ->icon('bx bx-circle')
+                ->icon('bx bxs-bolt-circle')
+        ]);
+
+        TomatoCategory::register([
+            Type::make()
+                ->label(__('Issues Type'))
+                ->back('admin.issues.index')
+                ->for('issues')
+                ->type('types'),
+            Type::make()
+                ->label(__('Issues Status'))
+                ->back('admin.issues.index')
+                ->for('issues')
+                ->type('status')
         ]);
     }
 }

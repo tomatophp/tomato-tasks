@@ -11,12 +11,30 @@
     <div class="pb-12">
         <div class="mx-auto">
             <x-splade-table :for="$table" striped>
-                <x-splade-cell icon>
-    <x-tomato-admin-row table type="icon" :value="$item->icon" />
-</x-splade-cell>
-<x-splade-cell color>
-    <x-tomato-admin-row table type="color" :value="$item->color" />
-</x-splade-cell>
+                <x-splade-cell project.name>
+                    <x-splade-link :href="route('admin.projects.show', $item->project?->id)" class="flex justify-start gap-2">
+                        @if($item->project?->color && $item->project?->icon)
+                            <div class="w-8 h-8 rounded-lg flex flex-col justify-center items-center" style="background-color: {{$item->project?->color}}">
+                                <i class="{{$item->project?->icon}} text-white text-lg"></i>
+                            </div>
+                        @endif
+                        <div class="flex flex-col justify-center items-center font-bold">
+                            [{{ $item->project?->key }}] {{ $item->project?->name }}
+                        </div>
+                    </x-splade-link>
+                </x-splade-cell>
+                <x-splade-cell name>
+                    <x-splade-link :href="route('admin.sprints.show', $item->id)" class="flex justify-start gap-2">
+                        @if($item->color && $item->icon)
+                            <div class="w-8 h-8 rounded-lg flex flex-col justify-center items-center" style="background-color: {{$item->color}}">
+                                <i class="{{$item->icon}} text-white text-lg"></i>
+                            </div>
+                        @endif
+                        <div class="flex flex-col justify-center items-center font-bold">
+                            [{{ $item->project?->key .'-S-'. $item->id }}] {{ $item->name }}
+                        </div>
+                    </x-splade-link>
+                </x-splade-cell>
 
                 <x-splade-cell actions>
                     <div class="flex justify-start">

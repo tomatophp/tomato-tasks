@@ -41,6 +41,9 @@ class SprintController extends Controller
         return Tomato::json(
             request: $request,
             model: \TomatoPHP\TomatoTasks\Models\Sprint::class,
+            filters: [
+                'project_id'
+            ]
         );
     }
 
@@ -60,6 +63,10 @@ class SprintController extends Controller
      */
     public function store(Request $request): RedirectResponse|JsonResponse
     {
+        $request->merge([
+           "created_by" => auth('web')->user()->id
+        ]);
+
         $response = Tomato::store(
             request: $request,
             model: \TomatoPHP\TomatoTasks\Models\Sprint::class,
