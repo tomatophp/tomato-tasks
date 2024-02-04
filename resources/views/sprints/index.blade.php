@@ -24,7 +24,7 @@
                     </x-splade-link>
                 </x-splade-cell>
                 <x-splade-cell name>
-                    <x-splade-link :href="route('admin.sprints.show', $item->id)" class="flex justify-start gap-2">
+                    <x-splade-link :href="route('admin.issues.index').'?sprint_id='. $item->id" class="flex justify-start gap-2">
                         @if($item->color && $item->icon)
                             <div class="w-8 h-8 rounded-lg flex flex-col justify-center items-center" style="background-color: {{$item->color}}">
                                 <i class="{{$item->icon}} text-white text-lg"></i>

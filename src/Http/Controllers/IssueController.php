@@ -28,6 +28,12 @@ class IssueController extends Controller
         if($request->has('parent_id')){
             $query->where('parent_id', $request->parent_id);
         }
+        else {
+            $query->whereNull('parent_id');
+        }
+        if($request->has('sprint_id')){
+            $query->where('sprint_id', $request->sprint_id);
+        }
         return Tomato::index(
             request: $request,
             model: $this->model,
