@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tables;
+namespace TomatoPHP\TomatoTasks\Tables;
 
 use Illuminate\Http\Request;
 use ProtoneMedia\Splade\AbstractTable;
@@ -18,7 +18,7 @@ class SprintTable extends AbstractTable
     public function __construct(public mixed $query=null)
     {
         if(!$query){
-            $this->query = \App\Models\Sprint::query();
+            $this->query = \TomatoPHP\TomatoTasks\Models\Sprint::query();
         }
     }
 
@@ -57,7 +57,7 @@ class SprintTable extends AbstractTable
             )
             ->bulkAction(
                 label: trans('tomato-admin::global.crud.delete'),
-                each: fn (\App\Models\Sprint $model) => $model->delete(),
+                each: fn (\TomatoPHP\TomatoTasks\Models\Sprint $model) => $model->delete(),
                 after: fn () => Toast::danger(__('Sprint Has Been Deleted'))->autoDismiss(2),
                 confirm: true
             )

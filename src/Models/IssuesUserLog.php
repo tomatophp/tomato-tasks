@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace TomatoPHP\TomatoTasks\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace TomatoPHP\TomatoTasks\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use TomatoPHP\TomatoCategory\Models\Type;
+use TomatoPHP\TomatoPms\Models\Project;
 
 /**
  * @property integer $id
@@ -53,13 +55,13 @@ class Issue extends Model
      */
     public function account()
     {
-        return $this->belongsTo('App\Models\Account');
+        return $this->belongsTo(config('tomato-crm.model'));
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function closedBy()
     {
         return $this->belongsTo('App\Models\User', 'closed_by_id');
     }
@@ -67,7 +69,7 @@ class Issue extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function lastUpdateBy()
     {
         return $this->belongsTo('App\Models\User', 'last_update_by');
     }
@@ -77,13 +79,13 @@ class Issue extends Model
      */
     public function project()
     {
-        return $this->belongsTo('App\Models\Project');
+        return $this->belongsTo(Project::class);
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function reporter()
     {
         return $this->belongsTo('App\Models\User', 'reporter_id');
     }
@@ -93,13 +95,13 @@ class Issue extends Model
      */
     public function sprint()
     {
-        return $this->belongsTo('App\Models\Sprint');
+        return $this->belongsTo('TomatoPHP\TomatoTasks\Models\Sprint');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function users()
+    public function employees()
     {
         return $this->belongsToMany('App\Models\User', 'issues_has_employees', null, 'employee_id');
     }
@@ -107,9 +109,9 @@ class Issue extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function types()
+    public function labels()
     {
-        return $this->belongsToMany('App\Models\Type', 'issues_has_labels', null, 'label_id');
+        return $this->belongsToMany(Type::class, 'issues_has_labels', null, 'label_id');
     }
 
     /**
@@ -117,15 +119,15 @@ class Issue extends Model
      */
     public function issuesMetas()
     {
-        return $this->hasMany('App\Models\IssuesMeta');
+        return $this->hasMany('TomatoPHP\TomatoTasks\Models\IssuesMeta');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function issuesMetas()
+    public function linkedMeta()
     {
-        return $this->hasMany('App\Models\IssuesMeta', 'linked_id');
+        return $this->hasMany('TomatoPHP\TomatoTasks\Models\IssuesMeta', 'linked_id');
     }
 
     /**
@@ -133,14 +135,14 @@ class Issue extends Model
      */
     public function timers()
     {
-        return $this->hasMany('App\Models\Timer');
+        return $this->hasMany('TomatoPHP\TomatoTasks\Models\Timer');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function timersMetas()
+    public function linkedTimersMetas()
     {
-        return $this->hasMany('App\Models\TimersMeta', 'linked_id');
+        return $this->hasMany('TomatoPHP\TomatoTasks\Models\TimersMeta', 'linked_id');
     }
 }

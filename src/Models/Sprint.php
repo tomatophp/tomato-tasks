@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace TomatoPHP\TomatoTasks\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use TomatoPHP\TomatoPms\Models\Project;
 
 /**
  * @property integer $id
@@ -33,13 +34,13 @@ class Sprint extends Model
      */
     public function issues()
     {
-        return $this->hasMany('App\Models\Issue');
+        return $this->hasMany('TomatoPHP\TomatoTasks\Models\Issue');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function createdBy()
     {
         return $this->belongsTo('App\Models\User', 'created_by');
     }
@@ -49,6 +50,6 @@ class Sprint extends Model
      */
     public function project()
     {
-        return $this->belongsTo('App\Models\Project');
+        return $this->belongsTo(Project::class);
     }
 }

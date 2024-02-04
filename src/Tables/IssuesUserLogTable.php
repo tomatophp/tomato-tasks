@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tables;
+namespace TomatoPHP\TomatoTasks\Tables;
 
 use Illuminate\Http\Request;
 use ProtoneMedia\Splade\AbstractTable;
@@ -18,7 +18,7 @@ class IssuesUserLogTable extends AbstractTable
     public function __construct(public mixed $query=null)
     {
         if(!$query){
-            $this->query = \App\Models\IssuesUserLog::query();
+            $this->query = \TomatoPHP\TomatoTasks\Models\IssuesUserLog::query();
         }
     }
 
@@ -57,7 +57,7 @@ class IssuesUserLogTable extends AbstractTable
             )
             ->bulkAction(
                 label: trans('tomato-admin::global.crud.delete'),
-                each: fn (\App\Models\IssuesUserLog $model) => $model->delete(),
+                each: fn (\TomatoPHP\TomatoTasks\Models\IssuesUserLog $model) => $model->delete(),
                 after: fn () => Toast::danger(__('IssuesUserLog Has Been Deleted'))->autoDismiss(2),
                 confirm: true
             )

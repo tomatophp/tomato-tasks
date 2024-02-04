@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace TomatoPHP\TomatoTasks\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $created_at
  * @property string $updated_at
  * @property Issue $issue
- * @property Issue $issue
+ * @property Issue $linkedIssue
  * @property User $user
  */
 class IssuesMeta extends Model
@@ -33,15 +33,15 @@ class IssuesMeta extends Model
      */
     public function issue()
     {
-        return $this->belongsTo('App\Models\Issue');
+        return $this->belongsTo('TomatoPHP\TomatoTasks\Models\Issue');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function issue()
+    public function linkedIssue()
     {
-        return $this->belongsTo('App\Models\Issue', 'linked_id');
+        return $this->belongsTo('TomatoPHP\TomatoTasks\Models\Issue', 'linked_id');
     }
 
     /**

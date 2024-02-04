@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace TomatoPHP\TomatoTasks\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
@@ -15,7 +15,7 @@ class IssuesUserLogController extends Controller
 
     public function __construct()
     {
-        $this->model = \App\Models\IssuesUserLog::class;
+        $this->model = \TomatoPHP\TomatoTasks\Models\IssuesUserLog::class;
     }
 
     /**
@@ -27,8 +27,8 @@ class IssuesUserLogController extends Controller
         return Tomato::index(
             request: $request,
             model: $this->model,
-            view: 'admin.issues-user-logs.index',
-            table: \App\Tables\IssuesUserLogTable::class
+            view: 'tomato-tasks::issues-user-logs.index',
+            table: \TomatoPHP\TomatoTasks\Tables\IssuesUserLogTable::class
         );
     }
 
@@ -40,7 +40,7 @@ class IssuesUserLogController extends Controller
     {
         return Tomato::json(
             request: $request,
-            model: \App\Models\IssuesUserLog::class,
+            model: \TomatoPHP\TomatoTasks\Models\IssuesUserLog::class,
         );
     }
 
@@ -50,7 +50,7 @@ class IssuesUserLogController extends Controller
     public function create(): View
     {
         return Tomato::create(
-            view: 'admin.issues-user-logs.create',
+            view: 'tomato-tasks::issues-user-logs.create',
         );
     }
 
@@ -62,7 +62,7 @@ class IssuesUserLogController extends Controller
     {
         $response = Tomato::store(
             request: $request,
-            model: \App\Models\IssuesUserLog::class,
+            model: \TomatoPHP\TomatoTasks\Models\IssuesUserLog::class,
             validation: [
                             'user_id' => 'required|exists:users,id',
             'model_type' => 'nullable|max:255|string',
@@ -84,35 +84,35 @@ class IssuesUserLogController extends Controller
     }
 
     /**
-     * @param \App\Models\IssuesUserLog $model
+     * @param \TomatoPHP\TomatoTasks\Models\IssuesUserLog $model
      * @return View|JsonResponse
      */
-    public function show(\App\Models\IssuesUserLog $model): View|JsonResponse
+    public function show(\TomatoPHP\TomatoTasks\Models\IssuesUserLog $model): View|JsonResponse
     {
         return Tomato::get(
             model: $model,
-            view: 'admin.issues-user-logs.show',
+            view: 'tomato-tasks::issues-user-logs.show',
         );
     }
 
     /**
-     * @param \App\Models\IssuesUserLog $model
+     * @param \TomatoPHP\TomatoTasks\Models\IssuesUserLog $model
      * @return View
      */
-    public function edit(\App\Models\IssuesUserLog $model): View
+    public function edit(\TomatoPHP\TomatoTasks\Models\IssuesUserLog $model): View
     {
         return Tomato::get(
             model: $model,
-            view: 'admin.issues-user-logs.edit',
+            view: 'tomato-tasks::issues-user-logs.edit',
         );
     }
 
     /**
      * @param Request $request
-     * @param \App\Models\IssuesUserLog $model
+     * @param \TomatoPHP\TomatoTasks\Models\IssuesUserLog $model
      * @return RedirectResponse|JsonResponse
      */
-    public function update(Request $request, \App\Models\IssuesUserLog $model): RedirectResponse|JsonResponse
+    public function update(Request $request, \TomatoPHP\TomatoTasks\Models\IssuesUserLog $model): RedirectResponse|JsonResponse
     {
         $response = Tomato::update(
             request: $request,
@@ -138,10 +138,10 @@ class IssuesUserLogController extends Controller
     }
 
     /**
-     * @param \App\Models\IssuesUserLog $model
+     * @param \TomatoPHP\TomatoTasks\Models\IssuesUserLog $model
      * @return RedirectResponse|JsonResponse
      */
-    public function destroy(\App\Models\IssuesUserLog $model): RedirectResponse|JsonResponse
+    public function destroy(\TomatoPHP\TomatoTasks\Models\IssuesUserLog $model): RedirectResponse|JsonResponse
     {
         $response = Tomato::destroy(
             model: $model,
