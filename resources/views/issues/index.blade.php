@@ -57,13 +57,26 @@
                     @php $type = \TomatoPHP\TomatoCategory\Models\Type::where('for', 'issues')->where('type', 'types')->where('key', $item->type)->first(); @endphp
                     @if($type)
                         <x-splade-link :href="route('admin.issues.index').'?parent_id='.$item->id" class="flex justify-start gap-2">
-                            <x-tomato-admin-tooltip :text="$type->name">
-                            <div class="flex flex-col justify-center items-center w-6 h-6  rounded-lg text-white" style="background-color: {{$type->color}}">
-                                <i class="{{$type->icon}} text-sm"></i>
+                            <div class="flex flex-col justify-center items-center ">
+                                <x-tomato-admin-tooltip :text="$type->name">
+                                    <div class="w-6 h-6 flex flex-col justify-center items-center  rounded-lg text-white" style="background-color: {{$type->color}}">
+                                        <i class="{{$type->icon}} text-sm"></i>
+                                    </div>
+                                </x-tomato-admin-tooltip>
                             </div>
-                            </x-tomato-admin-tooltip>
-                            <div class="flex flex-col justify-center items-center font-bold">
-                                {{$item->summary}}
+                            <div class="flex flex-col justify-center items-center">
+                                <div class="flex flex-col justify-center items-center">
+                                    <div class="flex flex-col justify-start">
+                                        <span class="font-bold">{{$item->summary}}</span>
+                                        <div>
+                                            <span class="text-gray-400 text-xs">{{ $item->project?->key .'-'. $item->id }}</span>
+                                            <span> - </span>
+                                            <span class="text-gray-400 text-xs">{{ $item->project?->name }}</span>
+                                            <span> - </span>
+                                            <span class="text-gray-400 text-xs">{{ $item->created_at->diffForHumans() }}</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </x-splade-link>
                     @endif

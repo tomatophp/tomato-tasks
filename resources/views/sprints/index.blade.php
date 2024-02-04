@@ -18,8 +18,11 @@
                                 <i class="{{$item->project?->icon}} text-white text-lg"></i>
                             </div>
                         @endif
-                        <div class="flex flex-col justify-center items-center font-bold">
-                            [{{ $item->project?->key }}] {{ $item->project?->name }}
+                        <div class="flex flex-col justify-center items-center">
+                            <div class="flex justify-start gap-2">
+                                <span class="text-gray-400">{{ $item->project?->key }}</span>
+                                <span class="font-bold">{{ $item->project?->name }}</span>
+                            </div>
                         </div>
                     </x-splade-link>
                 </x-splade-cell>
@@ -30,8 +33,11 @@
                                 <i class="{{$item->icon}} text-white text-lg"></i>
                             </div>
                         @endif
-                        <div class="flex flex-col justify-center items-center font-bold">
-                            [{{ $item->project?->key .'-S-'. $item->id }}] {{ $item->name }}
+                        <div class="flex flex-col justify-center items-center">
+                            <div class="flex justify-start gap-2">
+                                <span class="text-gray-400">{{ $item->project?->key .'-S-'. $item->id }}</span>
+                                <span class="font-bold">{{ $item->name }}</span>
+                            </div>
                         </div>
                     </x-splade-link>
                 </x-splade-cell>
