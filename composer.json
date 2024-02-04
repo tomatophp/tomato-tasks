@@ -1,0 +1,38 @@
+{
+    "name": "tomatophp/tomato-tasks",
+    "type": "library",
+    "description": "Manage Tasks For Tomato Projects",
+    "keywords": [
+        "php",
+        "laravel",
+        "template"
+    ],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "TomatoPHP\\TomatoTasks\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TomatoPHP\\TomatoTasks\\TomatoTasksServiceProvider"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "Fady Mondy",
+            "email": "info@3x1.io"
+        }
+    ],
+    "require": {
+        "php": "^8.0.2",
+        "tomatophp/console-helpers": "^1.0"
+    }
+}
