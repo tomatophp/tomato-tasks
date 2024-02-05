@@ -28,6 +28,9 @@ class IssuesMeta extends Model
      */
     protected $fillable = ['issue_id', 'user_id', 'linked_id', 'model', 'model_id', 'key', 'value', 'type', 'group', 'created_at', 'updated_at'];
 
+    protected $casts = [
+        'value' => 'json',
+    ];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

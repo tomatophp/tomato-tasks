@@ -18,6 +18,8 @@ Route::middleware(['web','auth', 'splade', 'verified'])->name('admin.')->group(f
     Route::post('admin/issues', [\TomatoPHP\TomatoTasks\Http\Controllers\IssueController::class, 'store'])->name('issues.store');
     Route::get('admin/issues/{model}', [\TomatoPHP\TomatoTasks\Http\Controllers\IssueController::class, 'show'])->name('issues.show');
     Route::get('admin/issues/{model}/edit', [\TomatoPHP\TomatoTasks\Http\Controllers\IssueController::class, 'edit'])->name('issues.edit');
+    Route::post('admin/issues/{model}/comment', [\TomatoPHP\TomatoTasks\Http\Controllers\IssueController::class, 'comment'])->name('issues.comment');
+    Route::post('admin/issues/{model}/timer', [\TomatoPHP\TomatoTasks\Http\Controllers\IssueController::class, 'timer'])->name('issues.timer');
     Route::post('admin/issues/{model}', [\TomatoPHP\TomatoTasks\Http\Controllers\IssueController::class, 'update'])->name('issues.update');
     Route::delete('admin/issues/{model}', [\TomatoPHP\TomatoTasks\Http\Controllers\IssueController::class, 'destroy'])->name('issues.destroy');
 });

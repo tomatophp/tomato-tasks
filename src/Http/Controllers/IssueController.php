@@ -3,11 +3,15 @@
 namespace TomatoPHP\TomatoTasks\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use ProtoneMedia\Splade\Facades\Toast;
 use TomatoPHP\TomatoAdmin\Facade\Tomato;
+use TomatoPHP\TomatoTasks\Models\IssuesUserLog;
+use TomatoPHP\TomatoTimer\Models\Timer;
 
 class IssueController extends Controller
 {
@@ -52,6 +56,10 @@ class IssueController extends Controller
         return Tomato::json(
             request: $request,
             model: \TomatoPHP\TomatoTasks\Models\Issue::class,
+            filters: [
+                'project_id',
+                'sprint_id'
+            ]
         );
     }
 
@@ -100,6 +108,15 @@ class IssueController extends Controller
             message: __('Issue updated successfully'),
             redirect: 'admin.issues.index',
         );
+
+        IssuesUserLog::create([
+            'user_id' => auth('web')->user()->id,
+            'action' => 'created',
+            'model_type' => 'TomatoPHP\TomatoTasks\Models\Issue',
+            'model_id' => $response->record->id,
+            'status' => $response->record->status,
+            'description' => 'Issue created',
+        ]);
 
         if($response instanceof JsonResponse){
             return $response;
@@ -165,11 +182,20 @@ class IssueController extends Controller
             redirect: 'admin.issues.index',
         );
 
+        IssuesUserLog::create([
+            'user_id' => auth('web')->user()->id,
+            'action' => 'updated',
+            'model_type' => 'TomatoPHP\TomatoTasks\Models\Issue',
+            'model_id' => $response->record->id,
+            'status' => $response->record->status,
+            'description' => 'Issue updated',
+        ]);
+
          if($response instanceof JsonResponse){
              return $response;
          }
 
-         return $response->redirect;
+        return back();
     }
 
     /**
@@ -189,5 +215,60 @@ class IssueController extends Controller
         }
 
         return $response->redirect;
+    }
+
+    public function comment(\TomatoPHP\TomatoTasks\Models\Issue $model, Request $request)
+    {
+        $request->validate([
+            "comment" => "required|string"
+        ]);
+
+        $model->issuesMetas()->create([
+            'user_id' => auth('web')->user()->id,
+            'key'=> 'comments',
+            'value' => $request->get('comment'),
+        ]);
+
+        IssuesUserLog::create([
+            'user_id' => auth('web')->user()->id,
+            'action' => 'comment',
+            'model_type' => 'TomatoPHP\TomatoTasks\Models\Issue',
+            'model_id' => $model->id,
+            'status' => $model->status,
+            'description' => $request->get('comment'),
+        ]);
+
+        return redirect()->to(route('admin.issues.show', $model->id).'?tab=comments');
+    }
+
+    public function timer(\TomatoPHP\TomatoTasks\Models\Issue $model)
+    {
+        $hasActiveTimer = Timer::where('employee_id', auth('web')->user()->id)->where('end_at', null)->first();
+        if($hasActiveTimer){
+            Toast::danger(__('Sorry You Have Active Timer Please Close It First'))->autoDismiss(2);
+            return back();
+        }
+        else {
+            $model->timers()->create([
+                'type' => $model->type,
+                'description' => $model->summary,
+                'status' => $model->status,
+                'employee_id' => auth('web')->user()->id,
+                'project_id' => $model->project_id,
+                'sprint_id' => $model->sprint_id,
+                'start_at' => Carbon::now(),
+            ]);
+
+            IssuesUserLog::create([
+                'user_id' => auth('web')->user()->id,
+                'action' => 'timer',
+                'model_type' => 'TomatoPHP\TomatoTasks\Models\Issue',
+                'model_id' => $model->id,
+                'status' => $model->status,
+                'description' => 'Timer started',
+            ]);
+        }
+
+        return back();
     }
 }

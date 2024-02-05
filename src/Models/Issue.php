@@ -50,6 +50,20 @@ class Issue extends Model
      */
     protected $fillable = ['reporter_id', 'project_id', 'account_id', 'closed_by_id', 'last_update_by', 'sprint_id', 'parent_id', 'type', 'status', 'priority', 'summary', 'description', 'points', 'icon', 'color', 'closed_at', 'last_update_at', 'order', 'is_closed', 'created_at', 'updated_at', 'deleted_at'];
 
+    public function parent()
+    {
+        return $this->belongsTo(Issue::class, 'parent_id');
+    }
+
+    public function getType()
+    {
+        return $this->belongsTo(Type::class, 'type', 'key');
+    }
+
+    public function getStatus()
+    {
+        return $this->belongsTo(Type::class, 'status', 'key');
+    }
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -135,7 +149,7 @@ class Issue extends Model
      */
     public function timers()
     {
-        return $this->hasMany('TomatoPHP\TomatoTasks\Models\Timer');
+        return $this->hasMany('TomatoPHP\TomatoTimer\Models\Timer');
     }
 
     /**
@@ -144,5 +158,15 @@ class Issue extends Model
     public function linkedTimersMetas()
     {
         return $this->hasMany('TomatoPHP\TomatoTasks\Models\TimersMeta', 'linked_id');
+    }
+
+    public function logs()
+    {
+        return $this->morphMany(IssuesUserLog::class, 'model');
+    }
+
+    public function childrens()
+    {
+        return $this->hasMany(Issue::class, 'parent_id');
     }
 }

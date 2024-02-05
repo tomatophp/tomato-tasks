@@ -97,7 +97,7 @@
 
                 <x-splade-cell actions>
                     <div class="flex justify-start">
-                        <x-tomato-admin-button success type="icon" title="{{trans('tomato-admin::global.crud.view')}}" modal :href="route('admin.issues.show', $item->id)">
+                        <x-tomato-admin-button success type="icon" title="{{trans('tomato-admin::global.crud.view')}}" :href="route('admin.issues.show', $item->id)">
                             <x-heroicon-s-eye class="h-6 w-6"/>
                         </x-tomato-admin-button>
                         <x-tomato-admin-button warning type="icon" title="{{trans('tomato-admin::global.crud.edit')}}" modal :href="route('admin.issues.edit', $item->id)">
