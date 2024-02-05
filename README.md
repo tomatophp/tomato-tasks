@@ -1,6 +1,6 @@
 ![Screenshot](https://github.com/tomatophp/tomato-tasks/blob/master/art/screenshot.png)
 
-# Tomato tasks
+# Tomato Tasks
 
 Manage Tasks For Tomato Projects
 
@@ -13,32 +13,6 @@ after install your package please run this command
 
 ```bash
 php artisan tomato-tasks:install
-```
-
-## Publish Assets
-
-you can publish config file by use this command
-
-```bash
-php artisan vendor:publish --tag="tomato-tasks-config"
-```
-
-you can publish views file by use this command
-
-```bash
-php artisan vendor:publish --tag="tomato-tasks-views"
-```
-
-you can publish languages file by use this command
-
-```bash
-php artisan vendor:publish --tag="tomato-tasks-lang"
-```
-
-you can publish migrations file by use this command
-
-```bash
-php artisan vendor:publish --tag="tomato-tasks-migrations"
 ```
 
 ## Support
@@ -59,7 +33,7 @@ Please see [SECURITY](SECURITY.md) for more information about security.
 
 ## Credits
 
-- [Tomatophp](mailto:info@3x1.io)
+- [Fady Mondy](mailto:info@3x1.io)
 
 ## License
 
