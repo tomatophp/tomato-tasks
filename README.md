@@ -1,3 +1,5 @@
+![Screenshot](https://github.com/tomatophp/tomato-tasks/blob/master/art/screenshot.png)
+
 # Tomato tasks
 
 Manage Tasks For Tomato Projects
