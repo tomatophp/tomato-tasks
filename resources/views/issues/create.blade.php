@@ -7,12 +7,13 @@
 @endphp
 
 <x-tomato-admin-container label="{{trans('tomato-admin::global.crud.create')}} {{__('Issue')}}">
+    {{-- {{ dd(isset($types[0])) }} --}}
     <x-splade-form :default="[
         'parent_id'=> isset($parent)?$parent->id:null,
         'project_id'=> isset($parent)?$parent->project_id:null,
         'sprint_id'=> isset($parent)?$parent->sprint_id:null,
-        'type'=>$types[0]?$types[0]->key:null,
-        'status'=> $statues[0]?$statues[0]->key:null,
+        'type'=> isset($types[0])?$types[0]->key:null,
+        'status'=> isset($statues[0])?$statues[0]->key:null,
         'priority' => 'medium'
     ]" class="flex flex-col space-y-4" action="{{route('admin.issues.store')}}" method="post">
         <x-splade-input :label="__('Summary')" name="summary" type="text"  :placeholder="__('Summary')" />

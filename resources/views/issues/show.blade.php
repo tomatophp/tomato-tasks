@@ -27,8 +27,8 @@
             <x-tomato-admin-copy :text="route('admin.issues.show', $model->id)">
                 <div class="flex justify-start gap-1">
                     <div class="flex flex-col justify-center items-center">
-                        <div class="p-1 text-white rounded-sm flex flex-col justify-center items-center"  style="background-color: {{$type->color}}">
-                            <i class="{{ $type->icon }} text-sm text-center"></i>
+                        <div class="p-1 text-white rounded-sm flex flex-col justify-center items-center"  style="background-color: {{@$type->color}}">
+                            <i class="{{ @$type->icon }} text-sm text-center"></i>
                         </div>
                     </div>
                     <div class="flex flex-col justify-center items-center text-sm text-gray-600">
